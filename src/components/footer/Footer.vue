@@ -62,7 +62,7 @@ export default defineComponent({
     const volumen = ref(50);
     const musicStore = useMusicPlaytStore();
     const computedImg = computed(() => {
-      return musicStore.img || "src/assets/foxbel-music-white-icon.png";
+      return musicStore.img || "icons/foxbel-music-white-icon.png";
     });
     const computedMusic = computed(() => {
       if (musicStore.music) {

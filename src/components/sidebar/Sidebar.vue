@@ -2,7 +2,7 @@
   <div>
     <div class="q-pa-md q-gutter-sm">
       <q-img
-        :src="'src/assets/foxbel-music.png'"
+        :src="'icons/foxbel-music.png'"
         @click="navigateTo"
         spinner-color="white"
         style="max-width: 250px"
