@@ -61,6 +61,7 @@ export default defineComponent({
               index: index,
               music: element.preview,
               img: element.album.cover,
+              img_banner: element.artist.picture_big,
               title: element.album.title,
               artist: element.artist.name,
             };

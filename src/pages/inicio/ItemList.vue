@@ -40,6 +40,10 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    img_banner: {
+      type: String,
+      default: "",
+    },
     title: {
       type: String,
       default: "",
@@ -57,6 +61,7 @@ export default defineComponent({
         index: props.index,
         music: props.music,
         img: props.img,
+        img_banner: props.img_banner,
         title: props.title,
         artist: props.artist,
       });

@@ -7,7 +7,7 @@
       <q-img
         :src="music.img"
         @click="play(music)"
-        spinner-color="white"
+        spinner-color="black"
         style="max-width: 250px"
       ></q-img>
       <q-icon name="play_arrow" @click="play(music)" class="style-icon" />
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, onMounted } from "vue";
+import { defineComponent, onMounted, computed, watch, ref } from "vue";
 import { usePlayListStore } from "../../stores/playList";
 import { useMusicPlaytStore } from "../../stores/musicPlaying";
 
@@ -53,22 +53,35 @@ export default defineComponent({
   name: "BannerP",
   setup() {
     const store = usePlayListStore();
-    const music = computed(() => store.firstMusic);
+    const watchMusic = computed(() => musicStore.getMusic);
     const musicStore = useMusicPlaytStore();
-    function play(music) {
+    let music = ref(store.firstMusic);
+    const play = (tmp) => {
       musicStore.setMusic({
-        id: music.id,
-        index: music.index,
-        music: music.music,
-        img: music.img,
-        title: music.title,
-        artist: music.artist,
+        id: tmp.id,
+        index: tmp.index,
+        music: tmp.music,
+        img: tmp.img,
+        img_banner: tmp.img_banner,
+        title: tmp.title,
+        artist: tmp.artist,
       });
-    }
-    onMounted(() => {
+    };
+    let contentStyle = (tmp) => {
       var elemento = document.getElementById("container-artist");
-      elemento.style.backgroundImage = `linear-gradient(0deg, rgba(232, 96, 96, 0.7), rgba(232, 96, 96, 0.7)), url(${music.value.img})`;
+      elemento.style.backgroundImage = `linear-gradient(0deg, rgba(232, 96, 96, 0.7), rgba(232, 96, 96, 0.7)), url(${tmp.img_banner})`;
+      elemento.style.backgroundRepeat = "no-repeat";
+      elemento.style.backgroundPosition = "inherit";
+      elemento.style.backgroundSize = "cover";
+    };
+    onMounted(() => {
+      contentStyle(store.firstMusic);
     });
+    watch(watchMusic, (newMusic) => {
+      music.value = newMusic;
+      contentStyle(newMusic);
+    });
+    watchMusic;
     return {
       music,
       play,

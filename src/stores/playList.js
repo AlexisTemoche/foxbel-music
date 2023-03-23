@@ -6,7 +6,8 @@ export const usePlayListStore = defineStore("playList", {
   }),
   getters: {
     firstMusic: (state) => {
-      if (state.playList.length) return state.playList[0];
+      if (state.playList.length)
+        return JSON.parse(JSON.stringify(state.playList[0]));
       else return {};
     },
   },

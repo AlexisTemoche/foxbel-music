@@ -8,6 +8,7 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
     index: "",
     music: "",
     img: "",
+    img_banner: "",
     title: "",
     artist: "",
     playing: false,
@@ -28,6 +29,18 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
         return state.index == 24;
       } else return true;
     },
+    getMusic: (state) => {
+      return {
+        id: state.id,
+        index: state.index,
+        music: state.music,
+        img: state.img,
+        img_banner: state.img_banner,
+        title: state.title,
+        artist: state.artist,
+        playing: state.playing,
+      };
+    },
   },
   actions: {
     prevPlay() {
@@ -44,11 +57,12 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
       if (!this.id) return;
       if (this.index < 24) this.setMusic(store.playList[this.index + 1]);
     },
-    setMusic({ id, index, music, img, title, artist }) {
+    setMusic({ id, index, music, img, img_banner, title, artist }) {
       this.id = id;
       this.index = index;
       this.music = music;
       this.img = img;
+      this.img_banner = img_banner;
       this.title = title;
       this.artist = artist;
       this.playing = true;
@@ -58,6 +72,7 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
       this.index = "";
       this.music = "";
       this.img = "";
+      this.img_banner = "";
       this.title = "";
       this.artist = "";
       this.playing = false;
