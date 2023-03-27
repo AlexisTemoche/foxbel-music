@@ -17,7 +17,7 @@
         color="red-12"
         v-model="text"
         placeholder="Buscar"
-        @keyup.enter="buscar(text)"
+        @keyup.enter="search(text)"
         style="width: inherit"
       >
         <template v-slot:append>
@@ -29,34 +29,37 @@
     <div class="col-sm-4 col-xs-1 text-right">
       <q-icon name="person" class="q-mx-xs person-icon" />
       <span class="gt-xs inline">Francisco M.</span>
-      <!-- <q-tooltip class="lt-xs hidden"> Francisco M. </q-tooltip> -->
     </div>
   </q-toolbar>
+  <q-dialog v-model="isLoading" persistent>
+    <q-spinner-ball size="50px" color="red" />
+  </q-dialog>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
 import { usePlayListStore } from "../../stores/playList";
 
 export default defineComponent({
   name: "CustomHeader",
 
   setup() {
-    const $q = useQuasar();
+    const isLoading = ref(false);
     const listStore = usePlayListStore();
 
-    function buscarMusic(text) {
-      api
-        .get(`search`, {
+    const search = async (text) => {
+      try {
+        if (!text) return;
+        isLoading.value = true;
+        const { data } = await api.get(`search`, {
           params: {
             q: text,
           },
-        })
-        .then((response) => {
-          const { data } = response.data;
-          const limpio = data.map((element, index) => {
+        });
+        const array = data.data || [];
+        if (array.length) {
+          const list = array.map((element, index) => {
             return {
               id: element.id,
               index: index,
@@ -67,22 +70,18 @@ export default defineComponent({
               artist: element.artist.name,
             };
           });
-          listStore.newList(limpio);
-        })
-        .catch(() => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: "Loading failed",
-            icon: "report_problem",
-          });
-        });
-    }
+          listStore.newList(list);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        isLoading.value = false;
+      }
+    };
 
     return {
-      buscar(text) {
-        buscarMusic(text);
-      },
+      isLoading,
+      search,
     };
   },
 });
@@ -90,7 +89,7 @@ export default defineComponent({
 
 <style scoped>
 .person-icon {
-  font-size: 14px;
+  font-size: 20px;
   color: #e86060;
 }
 </style>

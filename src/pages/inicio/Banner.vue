@@ -51,11 +51,23 @@ import { useMusicPlaytStore } from "../../stores/musicPlaying";
 
 export default defineComponent({
   name: "BannerP",
+
   setup() {
     const store = usePlayListStore();
     const musicStore = useMusicPlaytStore();
-    const computedMusic = computed(() => musicStore.getMusic);
-    let music = ref(store.firstMusic);
+    const music = ref(store.firstMusic);
+    const contentStyle = (tmp) => {
+      var elemento = document.getElementById("container-artist");
+      elemento.style.backgroundImage = `linear-gradient(0deg, rgba(232, 96, 96, 0.7), rgba(232, 96, 96, 0.7)), url(${tmp.img_banner})`;
+      elemento.style.backgroundRepeat = "no-repeat";
+      elemento.style.backgroundPosition = "inherit";
+      elemento.style.backgroundSize = "cover";
+    };
+
+    onMounted(() => {
+      contentStyle(store.firstMusic);
+    });
+
     const play = (tmp) => {
       musicStore.setMusic({
         id: tmp.id,
@@ -67,20 +79,15 @@ export default defineComponent({
         artist: tmp.artist,
       });
     };
-    let contentStyle = (tmp) => {
-      var elemento = document.getElementById("container-artist");
-      elemento.style.backgroundImage = `linear-gradient(0deg, rgba(232, 96, 96, 0.7), rgba(232, 96, 96, 0.7)), url(${tmp.img_banner})`;
-      elemento.style.backgroundRepeat = "no-repeat";
-      elemento.style.backgroundPosition = "inherit";
-      elemento.style.backgroundSize = "cover";
-    };
-    onMounted(() => {
-      contentStyle(store.firstMusic);
-    });
+
+    const computedMusic = computed(() => store.firstMusic);
+
     watch(computedMusic, (newMusic) => {
       music.value = newMusic;
       contentStyle(newMusic);
+      play(newMusic);
     });
+
     return {
       music,
       play,
