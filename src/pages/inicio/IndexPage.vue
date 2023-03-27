@@ -1,14 +1,23 @@
 <template>
   <q-page class="flex flex-center row">
-    <div class="col-10 row q-my-md">
-      <BannerP v-if="data.length" />
-    </div>
-    <div class="col-10 row">
-      <span class="header-list q-my-md" v-if="data.length">Resultados</span>
-    </div>
-    <div class="col-10 row">
-      <ItemList v-for="item in data" :key="item.id" v-bind="item"></ItemList>
-    </div>
+    <template v-if="data.length">
+      <div class="col-10 row q-my-md">
+        <BannerP />
+      </div>
+      <div class="col-10 row">
+        <span class="header-list q-my-md">Resultados</span>
+      </div>
+      <div class="col-10 row">
+        <ItemList v-for="item in data" :key="item.id" v-bind="item"></ItemList>
+      </div>
+    </template>
+    <template v-else>
+      <div class="col-10 row block text-center">
+        <span class="empty-body q-my-md"
+          >Ingrese el nombre de algún artista o canción en el buscador</span
+        >
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -37,6 +46,12 @@ export default defineComponent({
 .header-list {
   font-weight: 500;
   font-size: 22px;
+  line-height: 28px;
+  color: #e86060;
+}
+.empty-body {
+  font-weight: 400;
+  font-size: 18px;
   line-height: 28px;
   color: #e86060;
 }

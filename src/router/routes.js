@@ -1,12 +1,12 @@
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "/",
-        name: "",
+        name: "home",
         component: () => import("src/pages/inicio/IndexPage.vue"),
       },
       {

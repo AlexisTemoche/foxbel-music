@@ -16,6 +16,7 @@
         dense
         color="red-12"
         v-model="text"
+        placeholder="Buscar"
         @keyup.enter="buscar(text)"
         style="width: inherit"
       >

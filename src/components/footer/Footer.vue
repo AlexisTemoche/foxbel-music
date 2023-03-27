@@ -98,6 +98,7 @@ export default defineComponent({
       audioRef.value.addEventListener("pause", handlePause);
       audioRef.value.addEventListener("timeupdate", handleTime);
       audioRef.value.addEventListener("loadedmetadata", handleDuration);
+      audioRef.value.addEventListener("ended", handleEnded);
     });
 
     const handlePause = () => {
@@ -112,6 +113,14 @@ export default defineComponent({
       duration.value = audioRef.value.duration;
     };
 
+    const handleEnded = () => {
+      if (musicStore.index < 24) {
+        setTimeout(() => {
+          musicStore.nextPlay();
+        }, 1500);
+      }
+    };
+
     const formatTime = (time) => {
       const minutes = Math.floor(time / 60);
       const seconds = Math.floor(time % 60);
@@ -122,6 +131,7 @@ export default defineComponent({
       audioRef.value.removeEventListener("pause", handlePause);
       audioRef.value.removeEventListener("timeupdate", handleTime);
       audioRef.value.removeEventListener("loadedmetadata", handleDuration);
+      audioRef.value.removeEventListener("ended", handleEnded);
     });
 
     const changeVolume = () => {
