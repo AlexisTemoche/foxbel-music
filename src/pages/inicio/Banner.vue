@@ -53,8 +53,8 @@ export default defineComponent({
   name: "BannerP",
   setup() {
     const store = usePlayListStore();
-    const watchMusic = computed(() => musicStore.getMusic);
     const musicStore = useMusicPlaytStore();
+    const computedMusic = computed(() => musicStore.getMusic);
     let music = ref(store.firstMusic);
     const play = (tmp) => {
       musicStore.setMusic({
@@ -77,11 +77,10 @@ export default defineComponent({
     onMounted(() => {
       contentStyle(store.firstMusic);
     });
-    watch(watchMusic, (newMusic) => {
+    watch(computedMusic, (newMusic) => {
       music.value = newMusic;
       contentStyle(newMusic);
     });
-    watchMusic;
     return {
       music,
       play,

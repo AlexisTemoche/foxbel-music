@@ -57,6 +57,9 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
       if (!this.id) return;
       if (this.index < 24) this.setMusic(store.playList[this.index + 1]);
     },
+    setPlay(value) {
+      this.playing = value;
+    },
     setMusic({ id, index, music, img, img_banner, title, artist }) {
       this.id = id;
       this.index = index;
