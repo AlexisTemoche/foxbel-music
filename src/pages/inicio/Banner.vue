@@ -57,7 +57,7 @@ export default defineComponent({
     const musicStore = useMusicPlaytStore();
     const music = ref(store.firstMusic);
     const contentStyle = (tmp) => {
-      var elemento = document.getElementById("container-artist");
+      const elemento = document.getElementById("container-artist");
       elemento.style.backgroundImage = `linear-gradient(0deg, rgba(232, 96, 96, 0.7), rgba(232, 96, 96, 0.7)), url(${tmp.img_banner})`;
       elemento.style.backgroundRepeat = "no-repeat";
       elemento.style.backgroundPosition = "inherit";
@@ -65,7 +65,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      music.value = store.firstMusic;
       contentStyle(store.firstMusic);
+      play(store.firstMusic);
     });
 
     const play = (tmp) => {
