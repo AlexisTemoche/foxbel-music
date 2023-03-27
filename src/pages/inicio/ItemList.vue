@@ -6,7 +6,14 @@
         spinner-color="red-12"
         style="min-width: 100px; max-width: 150px"
       ></q-img>
-      <q-icon name="play_arrow" @click="play()" class="style-icon" />
+      <q-btn
+        flat
+        round
+        color="white"
+        icon="play_arrow"
+        @click="play()"
+        class="style-icon"
+      ></q-btn>
     </div>
     <div class="row justify-center style-title">
       <span>{{ title }}</span>
@@ -88,8 +95,7 @@ export default defineComponent({
 }
 .style-icon {
   position: absolute;
-  top: 38%;
-  font-size: 50px;
-  color: white;
+  font-size: 30px;
+  top: 20%;
 }
 </style>

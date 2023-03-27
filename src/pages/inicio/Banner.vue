@@ -7,10 +7,17 @@
       <q-img
         :src="music.img"
         @click="play(music)"
-        spinner-color="black"
+        spinner-color="red"
         style="max-width: 250px"
       ></q-img>
-      <q-icon name="play_arrow" @click="play(music)" class="style-icon" />
+      <q-btn
+        flat
+        round
+        color="white"
+        icon="play_arrow"
+        @click="play(music)"
+        class="style-icon"
+      ></q-btn>
     </div>
   </div>
   <div id="container-artist" class="col-sm-9 col-12 q-pa-md">
@@ -101,9 +108,8 @@ export default defineComponent({
 <style scoped>
 .style-icon {
   position: absolute;
-  top: 35%;
-  font-size: 90px;
-  color: white;
+  top: 20%;
+  font-size: 50px;
 }
 .style-title {
   font-weight: 700;

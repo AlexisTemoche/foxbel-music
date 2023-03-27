@@ -15,13 +15,19 @@
         outlined
         dense
         color="red-12"
-        v-model="text"
+        v-model="input_search"
         placeholder="Buscar"
-        @keyup.enter="search(text)"
+        @keyup.enter="action_search()"
         style="width: inherit"
       >
         <template v-slot:append>
-          <q-icon name="search" />
+          <q-btn
+            flat
+            round
+            icon="search"
+            @click="action_search()"
+            class="search-icon"
+          ></q-btn>
         </template>
       </q-input>
     </div>
@@ -47,14 +53,18 @@ export default defineComponent({
   setup() {
     const isLoading = ref(false);
     const listStore = usePlayListStore();
+    const input_search = ref("");
+    const tmp_search = ref("");
 
-    const search = async (text) => {
+    const action_search = async () => {
       try {
-        if (!text) return;
+        if (!input_search.value) return;
+        if (input_search.value == tmp_search.value) return;
         isLoading.value = true;
+        tmp_search.value = input_search.value;
         const { data } = await api.get(`search`, {
           params: {
-            q: text,
+            q: input_search.value,
           },
         });
         const array = data.data || [];
@@ -81,7 +91,8 @@ export default defineComponent({
 
     return {
       isLoading,
-      search,
+      input_search,
+      action_search,
     };
   },
 });
@@ -91,5 +102,8 @@ export default defineComponent({
 .person-icon {
   font-size: 20px;
   color: #e86060;
+}
+.search-icon {
+  min-width: 1rem;
 }
 </style>

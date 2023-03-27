@@ -13,24 +13,33 @@
     </div>
   </div>
   <div class="col-md-2 col-4 text-center self-center">
-    <q-icon
-      name="skip_previous"
-      :class="{ disabled: disabledPrev }"
+    <q-btn
+      flat
+      round
+      color="white"
+      icon="skip_previous"
+      :disabled="disabledPrev"
       @click="prevPlay"
-      class="q-mx-xs control-bar-icon"
-    />
-    <q-icon
-      :name="playing ? 'pause' : 'play_circle'"
-      class="q-mx-xs control-bar-icon"
+      class="control-bar-icon"
+    ></q-btn>
+    <q-btn
+      flat
+      round
+      color="white"
+      :icon="playing ? 'pause' : 'play_circle'"
+      :disabled="disabledPlay"
       @click="togglePlay"
-      :class="{ disabled: disabledPlay }"
-    />
-    <q-icon
-      name="skip_next"
-      class="q-mx-xs control-bar-icon"
-      :class="{ disabled: disabledNext }"
+      class="control-bar-icon"
+    ></q-btn>
+    <q-btn
+      flat
+      round
+      color="white"
+      icon="skip_next"
+      :disabled="disabledNext"
       @click="nextPlay"
-    />
+      class="control-bar-icon"
+    ></q-btn>
   </div>
   <div
     class="col-md-5 col-2 row text-center self-center"
@@ -50,7 +59,7 @@
         label-text-color="dark"
         track-size="1px"
         class="self-center"
-        :class="{ 'icon-volumen': screenResponsive }"
+        :class="{ 'volume-bar': screenResponsive }"
         :vertical="screenResponsive"
         :reverse="screenResponsive"
       ></q-slider>
@@ -59,11 +68,14 @@
       class="self-center text-center"
       :class="{ 'col-md-2': !screenResponsive }"
     >
-      <q-icon
-        :name="muted ? 'volume_off' : 'volume_up'"
-        class="control-bar-icon-volume"
+      <q-btn
+        flat
+        round
+        color="white"
+        :icon="muted ? 'volume_off' : 'volume_up'"
         @click="changeMuted"
-      />
+        class="control-bar-icon"
+      ></q-btn>
     </div>
   </div>
 
@@ -184,30 +196,31 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.control-bar-icon {
-  font-size: 45px;
-}
-.control-bar-icon-volume {
-  font-size: 25px;
-}
-@media only screen and (max-width: 600px) {
-  .control-bar-icon {
-    font-size: 25px;
-  }
-  .control-bar-icon-volume {
-    font-size: 18px;
-  }
-}
-.disabled {
-  color: aliceblue;
-}
 .span-footer {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: block;
 }
-.icon-volumen {
+.control-bar-icon {
+  font-size: 18px;
+}
+@media only screen and (max-width: 599px) {
+  .control-bar-icon {
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 1023px) {
+  .control-bar-icon {
+    font-size: 15px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .control-bar-icon {
+    font-size: 18px;
+  }
+}
+.volume-bar {
   height: 40px;
 }
 </style>
