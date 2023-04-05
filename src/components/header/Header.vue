@@ -15,7 +15,8 @@
         outlined
         dense
         color="red-12"
-        v-model="input_search"
+        ref="input_search"
+        v-model="model_search"
         placeholder="Buscar"
         @keyup.enter="action_search()"
         style="width: inherit"
@@ -43,28 +44,33 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { usePlayListStore } from "../../stores/playList";
+import { useMusicPlaytStore } from "../../stores/musicPlaying";
 
 export default defineComponent({
   name: "CustomHeader",
 
   setup() {
+    const router = useRouter();
     const isLoading = ref(false);
     const listStore = usePlayListStore();
-    const input_search = ref("");
+    const musicStore = useMusicPlaytStore();
+    const input_search = ref(null);
+    const model_search = ref("");
     const tmp_search = ref("");
 
     const action_search = async () => {
       try {
-        if (!input_search.value) return;
-        if (input_search.value == tmp_search.value) return;
+        if (!model_search.value) return;
+        if (model_search.value == tmp_search.value) return;
         isLoading.value = true;
-        tmp_search.value = input_search.value;
+        tmp_search.value = model_search.value;
         const { data } = await api.get(`search`, {
           params: {
-            q: input_search.value,
+            q: model_search.value,
           },
         });
         const array = data.data || [];
@@ -89,9 +95,18 @@ export default defineComponent({
       }
     };
 
+    onMounted(() => {
+      router.push({ name: "recientes" });
+      model_search.value = "rolling in the deep";
+      action_search();
+      input_search.value.focus();
+    });
+
     return {
       isLoading,
+      musicStore,
       input_search,
+      model_search,
       action_search,
     };
   },

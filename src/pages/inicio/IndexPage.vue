@@ -11,13 +11,6 @@
         <ItemList v-for="item in data" :key="item.id" v-bind="item"></ItemList>
       </div>
     </template>
-    <template v-else>
-      <div class="col-10 row block text-center">
-        <span class="empty-body q-my-md"
-          >Ingrese el nombre de algún artista o canción en el buscador</span
-        >
-      </div>
-    </template>
   </q-page>
 </template>
 

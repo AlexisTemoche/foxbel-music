@@ -6,16 +6,15 @@
     >
       <q-img
         :src="music.img"
-        @click="play(music)"
+        @click="playMusic(music, true)"
         spinner-color="red"
-        style="max-width: 250px"
       ></q-img>
       <q-btn
         flat
         round
         color="white"
         icon="play_arrow"
-        @click="play(music)"
+        @click="playMusic(music, true)"
         class="style-icon"
       ></q-btn>
     </div>
@@ -36,7 +35,7 @@
       class="q-mx-sm btn-reproducir"
       color="red-12"
       label="Reproducir"
-      @click="play(music)"
+      @click="playMusic(music)"
       no-caps
     ></q-btn>
     <q-btn
@@ -74,10 +73,10 @@ export default defineComponent({
     onMounted(() => {
       music.value = store.firstMusic;
       contentStyle(store.firstMusic);
-      play(store.firstMusic);
+      playMusic(store.firstMusic, false);
     });
 
-    const play = (tmp) => {
+    const playMusic = (tmp, playing) => {
       musicStore.setMusic({
         id: tmp.id,
         index: tmp.index,
@@ -86,6 +85,7 @@ export default defineComponent({
         img_banner: tmp.img_banner,
         title: tmp.title,
         artist: tmp.artist,
+        playing: playing,
       });
     };
 
@@ -94,12 +94,12 @@ export default defineComponent({
     watch(computedMusic, (newMusic) => {
       music.value = newMusic;
       contentStyle(newMusic);
-      play(newMusic);
+      playMusic(newMusic, false);
     });
 
     return {
       music,
-      play,
+      playMusic,
     };
   },
 });
@@ -108,7 +108,7 @@ export default defineComponent({
 <style scoped>
 .style-icon {
   position: absolute;
-  top: 20%;
+  top: 16%;
   font-size: 50px;
 }
 .style-title {

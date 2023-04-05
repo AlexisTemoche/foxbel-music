@@ -5,7 +5,6 @@
         :src="'icons/foxbel-music.png'"
         @click="navigateTo"
         spinner-color="white"
-        style="max-width: 250px"
       ></q-img>
     </div>
 

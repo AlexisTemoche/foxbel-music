@@ -78,8 +78,7 @@
       ></q-btn>
     </div>
   </div>
-
-  <audio id="player" ref="audioRef" :src="music" autoplay></audio>
+  <audio id="player" ref="audioRef" :src="music" />
 </template>
 
 <script>
@@ -129,7 +128,7 @@ export default defineComponent({
       if (musicStore.index < 24) {
         setTimeout(() => {
           musicStore.nextPlay();
-        }, 1500);
+        }, 1000);
       }
     };
 
@@ -176,8 +175,9 @@ export default defineComponent({
       duration,
 
       prevPlay: () => musicStore.prevPlay(),
-      togglePlay: () => musicStore.togglePlay(),
+      togglePlay: () => musicStore.setPlay(!musicStore.playing),
       nextPlay: () => musicStore.nextPlay(),
+
       playing: computed(() => musicStore.playing),
       disabledPrev: computed(() => musicStore.disabledPrev),
       disabledPlay: computed(() => musicStore.disabledPlay),

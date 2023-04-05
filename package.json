@@ -2,7 +2,7 @@
   "name": "foxbel-music-app",
   "version": "0.0.1",
   "description": "application to play music",
-  "productName": "foxbel-music",
+  "productName": "Foxbel Music",
   "author": "Alexis Temoche",
   "private": true,
   "scripts": {

@@ -45,22 +45,36 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
   actions: {
     prevPlay() {
       if (!this.id) return;
-      if (this.index > 0) this.setMusic(store.playList[this.index - 1]);
-    },
-    togglePlay() {
-      if (!this.id) return;
-      if (this.playing) document.getElementById("player").pause();
-      else document.getElementById("player").play();
-      this.playing = !this.playing;
+      const myTarget = JSON.parse(
+        JSON.stringify(store.playList[this.index - 1])
+      );
+      if (this.index > 0) this.setMusic({ ...myTarget, playing: true });
     },
     nextPlay() {
       if (!this.id) return;
-      if (this.index < 24) this.setMusic(store.playList[this.index + 1]);
+      const myTarget = JSON.parse(
+        JSON.stringify(store.playList[this.index + 1])
+      );
+      if (this.index < 24) this.setMusic({ ...myTarget, playing: true });
     },
     setPlay(value) {
+      if (!this.id) return;
       this.playing = value;
+      setTimeout(() => {
+        if (value) document.getElementById("player").play();
+        else document.getElementById("player").pause();
+      }, 10);
     },
-    setMusic({ id, index, music, img, img_banner, title, artist }) {
+    setMusic({
+      id,
+      index,
+      music,
+      img,
+      img_banner,
+      title,
+      artist,
+      playing = true,
+    }) {
       this.id = id;
       this.index = index;
       this.music = music;
@@ -68,7 +82,7 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
       this.img_banner = img_banner;
       this.title = title;
       this.artist = artist;
-      this.playing = true;
+      this.setPlay(playing);
     },
     reset() {
       this.id = "";
@@ -78,7 +92,7 @@ export const useMusicPlaytStore = defineStore("musicPlaying", {
       this.img_banner = "";
       this.title = "";
       this.artist = "";
-      this.playing = false;
+      this.setPlay(false);
     },
   },
 });

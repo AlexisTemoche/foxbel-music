@@ -11,7 +11,7 @@
         round
         color="white"
         icon="play_arrow"
-        @click="play()"
+        @click="playMusic()"
         class="style-icon"
       ></q-btn>
     </div>
@@ -62,7 +62,7 @@ export default defineComponent({
   },
   setup(props) {
     const musicStore = useMusicPlaytStore();
-    function play() {
+    const playMusic = () => {
       musicStore.setMusic({
         id: props.id,
         index: props.index,
@@ -71,10 +71,11 @@ export default defineComponent({
         img_banner: props.img_banner,
         title: props.title,
         artist: props.artist,
+        playing: true
       });
     }
     return {
-      play,
+      playMusic,
     };
   },
 });
